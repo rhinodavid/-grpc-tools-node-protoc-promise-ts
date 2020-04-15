@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agreatfool/grpc_tools_node_protoc_ts.git"
+    "url": "git+https://github.com/rhinodavid/grpc_tools_node_protoc_ts.git"
   },
   "keywords": [
     "TypeScript",
@@ -24,9 +24,9 @@
   "author": "Jonathan Dai",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues"
+    "url": "https://github.com/rhinodavid/grpc_tools_node_protoc_ts/issues"
   },
-  "homepage": "https://github.com/agreatfool/grpc_tools_node_protoc_ts#readme",
+  "homepage": "https://github.com/rhinodavid/grpc_tools_node_protoc_ts#readme",
   "dependencies": {
     "google-protobuf": "3.5.0",
     "handlebars": "4.7.4",
