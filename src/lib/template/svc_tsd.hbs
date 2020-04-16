@@ -52,9 +52,6 @@ export interface I{{{serviceName}}}Client {
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: PromiseConstructor): Promise<{{{responseTypeName}}}>;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback:PromiseConstructor: Promise<{{{responseTypeName}}}>;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback:PromiseConstructor): Promise<{{{responseTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
     {{lcFirst methodName}}(callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
@@ -81,9 +78,6 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: PromiseConstructor): Promise<{{{responseTypeName}}}>;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback:PromiseConstructor: Promise<{{{responseTypeName}}}>;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback:PromiseConstructor): Promise<{{{responseTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
     public {{lcFirst methodName}}(callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
@@ -101,4 +95,35 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
         {{/eq}}
     {{/each}}
 }
+
+
+/**
+ * Interface and class to declare a client that has been promisifyed with the
+ * `grpc-promise` (https://github.com/carlessistare/grpc-promise) package
+ */
+export interface I{{{serviceName}}}PromiseClient {
+    {{#each methods}}
+        {{#eq type "ClientUnaryCall"}}
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}): Promise<{{{responseTypeName}}}>;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata): Promise<{{{responseTypeName}}}>;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>): Promise<{{{responseTypeName}}}>;
+        {{/eq}}
+    {{/each}}
+}
+
+export class {{{serviceName}}}PromiseClient extends grpc.Client implements I{{{serviceName}}}PromiseClient {
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
+    {{#each methods}}
+        {{#eq type "ClientUnaryCall"}}
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}): Promise<{{{responseTypeName}}}>;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata): Promise<{{{responseTypeName}}}>;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>): Promise<{{{responseTypeName}}}>;
+        {{/eq}}
+    {{/each}}
+
+    // TODO: add other types of RPCs
+}
 {{/each}}
+
+
+
