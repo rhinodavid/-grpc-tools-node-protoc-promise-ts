@@ -8,17 +8,16 @@ import {
   withAllStdIn,
 } from "./lib/Utility";
 
-/**
- * This is the ProtoC compiler plugin.
- *
- * It only accepts stdin/stdout output according to the protocol
- * specified in [plugin.proto](https://github.com/google/protobuf/blob/master/src/google/protobuf/compiler/plugin.proto).
- */
 import { ExportMap } from "./lib/ExportMap";
 import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 import { format as formatProtoMessage } from "./lib/format/ProtoMsgTsdFormatter";
 import { format as formatProtoService } from "./lib/format/ProtoSvcTsdFormatter";
 import { render } from "./lib/TplEngine";
+
+/**
+ * See specification:
+ * [plugin.proto](https://github.com/google/protobuf/blob/master/src/google/protobuf/compiler/plugin.proto).
+ */
 
 withAllStdIn((inputBuff: Buffer) => {
   try {
