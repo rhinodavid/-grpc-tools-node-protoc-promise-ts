@@ -1,3 +1,1 @@
-export const DependencyFilter: Array<string> = [
-    'google/api/annotations.proto'
-];
+export const DependencyFilter: Array<string> = ["google/api/annotations.proto"];

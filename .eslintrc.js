@@ -6,7 +6,7 @@ module.exports = {
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
   ],
-  ignorePatterns: ["dist/"],
+  ignorePatterns: ["build/"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {},

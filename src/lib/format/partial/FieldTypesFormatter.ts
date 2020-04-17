@@ -1,6 +1,14 @@
-import {FieldDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
-import {ExportEnumEntry, ExportMap, ExportMessageEntry} from "../../ExportMap";
-import {Utility} from "../../Utility";
+import {
+  ExportEnumEntry,
+  ExportMap,
+  ExportMessageEntry,
+} from "../../ExportMap";
+import {
+  filePathToPseudoNamespace,
+  withinNamespaceFromExportEntry,
+} from "../../Utility";
+
+import { FieldDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 
 export const MESSAGE_TYPE = 11;
 export const BYTES_TYPE = 12;
@@ -12,10 +20,10 @@ export const JS_STRING = 1;
 export const JS_NUMBER = 2;
 
 interface TypeMap {
-  [key: number]: string
+  [key: number]: string;
 }
 
-const TypeNumToTypeString = <TypeMap>{};
+const TypeNumToTypeString = {} as TypeMap;
 TypeNumToTypeString[1] = "number"; // TYPE_DOUBLE
 TypeNumToTypeString[2] = "number"; // TYPE_FLOAT
 TypeNumToTypeString[3] = "number"; // TYPE_INT64
@@ -35,64 +43,68 @@ TypeNumToTypeString[16] = "number"; // TYPE_SFIXED64
 TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
 
-const JsTypeNumToTypeString = <TypeMap>{};
+const JsTypeNumToTypeString = {} as TypeMap;
 JsTypeNumToTypeString[JS_NORMAL] = null; // [jstype = JS_NORMAL], value "null" means just using the original type
 JsTypeNumToTypeString[JS_STRING] = "string"; // [jstype = JS_STRING]
 JsTypeNumToTypeString[JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
 
-export namespace FieldTypesFormatter {
+export function getTypeName(fieldTypeNum: number): string {
+  return TypeNumToTypeString[fieldTypeNum];
+}
 
-    export function getTypeName(fieldTypeNum: number): string {
-        return TypeNumToTypeString[fieldTypeNum];
-    }
+export function getJsTypeName(fieldTypeNum: number): string {
+  return fieldTypeNum === JS_NORMAL
+    ? null
+    : JsTypeNumToTypeString[fieldTypeNum];
+}
 
-    export function getJsTypeName(fieldTypeNum: number): string {
-        return fieldTypeNum === JS_NORMAL ? null : JsTypeNumToTypeString[fieldTypeNum];
-    }
+export function getFieldType(
+  type: FieldDescriptorProto.Type,
+  typeName: string,
+  currentFileName: string,
+  exportMap: ExportMap
+): string {
+  let fieldType: string;
+  let fromExport: ExportMessageEntry | ExportEnumEntry;
+  let withinNamespace: string;
 
-    export function getFieldType(type: FieldDescriptorProto.Type,
-                                 typeName: string,
-                                 currentFileName: string,
-                                 exportMap: ExportMap): string {
+  switch (type) {
+    case MESSAGE_TYPE:
+      fromExport = exportMap.getMessage(typeName);
+      if (!fromExport) {
+        throw new Error("Could not getFieldType for message: " + typeName);
+      }
+      withinNamespace = withinNamespaceFromExportEntry(typeName, fromExport);
+      if (fromExport.fileName === currentFileName) {
+        fieldType = withinNamespace;
+      } else {
+        fieldType =
+          filePathToPseudoNamespace(fromExport.fileName) +
+          "." +
+          withinNamespace;
+      }
+      break;
 
-        let fieldType: string;
-        let fromExport: ExportMessageEntry | ExportEnumEntry;
-        let withinNamespace: string;
+    case ENUM_TYPE:
+      fromExport = exportMap.getEnum(typeName);
+      if (!fromExport) {
+        throw new Error("Could not getFieldType for enum: " + typeName);
+      }
+      withinNamespace = withinNamespaceFromExportEntry(typeName, fromExport);
+      if (fromExport.fileName === currentFileName) {
+        fieldType = withinNamespace;
+      } else {
+        fieldType =
+          filePathToPseudoNamespace(fromExport.fileName) +
+          "." +
+          withinNamespace;
+      }
+      break;
 
-        switch (type) {
-            case MESSAGE_TYPE:
-                fromExport = exportMap.getMessage(typeName);
-                if (!fromExport) {
-                    throw new Error("Could not getFieldType for message: " + typeName);
-                }
-                withinNamespace = Utility.withinNamespaceFromExportEntry(typeName, fromExport);
-                if (fromExport.fileName === currentFileName) {
-                    fieldType = withinNamespace;
-                } else {
-                    fieldType = Utility.filePathToPseudoNamespace(fromExport.fileName) + "." + withinNamespace;
-                }
-                break;
+    default:
+      fieldType = TypeNumToTypeString[type];
+      break;
+  }
 
-            case ENUM_TYPE:
-                fromExport = exportMap.getEnum(typeName);
-                if (!fromExport) {
-                    throw new Error("Could not getFieldType for enum: " + typeName);
-                }
-                withinNamespace = Utility.withinNamespaceFromExportEntry(typeName, fromExport);
-                if (fromExport.fileName === currentFileName) {
-                    fieldType = withinNamespace;
-                } else {
-                    fieldType = Utility.filePathToPseudoNamespace(fromExport.fileName) + "." + withinNamespace;
-                }
-                break;
-
-            default:
-                fieldType = TypeNumToTypeString[type];
-                break;
-        }
-
-        return fieldType;
-
-    }
-
+  return fieldType;
 }

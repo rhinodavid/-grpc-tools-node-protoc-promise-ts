@@ -1,27 +1,24 @@
-import {EnumDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
-import {TplEngine} from "../../TplEngine";
-import {Utility} from "../../Utility";
+import { EnumDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 
-export namespace EnumFormatter {
+export interface EnumModel {
+  indent: string;
+  enumName: string;
+  values: { [key: string]: number };
+}
 
-    export interface EnumModel {
-        indent: string;
-        enumName: string;
-        values: { [key: string]: number };
-    }
+export function format(
+  enumDescriptor: EnumDescriptorProto,
+  indent: string
+): EnumModel {
+  const enumName = enumDescriptor.getName();
+  const values: { [key: string]: number } = {};
+  enumDescriptor.getValueList().forEach((value) => {
+    values[value.getName().toUpperCase()] = value.getNumber();
+  });
 
-    export function format(enumDescriptor: EnumDescriptorProto, indent: string): EnumModel {
-        let enumName = enumDescriptor.getName();
-        let values: { [key: string]: number } = {};
-        enumDescriptor.getValueList().forEach(value => {
-            values[value.getName().toUpperCase()] = value.getNumber();
-        });
-
-        return {
-            indent,
-            enumName: enumName,
-            values: values,
-        };
-    }
-
+  return {
+    indent,
+    enumName: enumName,
+    values: values,
+  };
 }

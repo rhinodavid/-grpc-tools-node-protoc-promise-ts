@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
-var LibPath = require('path');
+/* eslint-disable */
+const path = require("path");
 
-require(LibPath.join(__dirname, '../build/index'));
+require(path.join(__dirname, "../build/index"));
