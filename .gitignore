@@ -57,3 +57,5 @@ jspm_packages/
 .env
 
 .idea
+
+build
