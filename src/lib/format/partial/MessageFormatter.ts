@@ -29,7 +29,7 @@ import {
 } from "../../Utility";
 
 import { ExportMap } from "../../ExportMap";
-import { registerHelper } from "../../TplEngine";
+import { registerHelper } from "../../TemplateEngine";
 
 export const OBJECT_TYPE_NAME = "AsObject";
 

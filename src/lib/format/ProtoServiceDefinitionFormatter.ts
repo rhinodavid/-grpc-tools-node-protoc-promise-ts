@@ -9,7 +9,7 @@ import { DependencyFilter } from "../DependencyFilter";
 import { ExportMap } from "../ExportMap";
 import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 import { WellKnownTypesMap } from "../WellKnown";
-import { registerHelper } from "../TplEngine";
+import { registerHelper } from "../TemplateEngine";
 
 export interface ServiceType {
   serviceName: string;
@@ -43,7 +43,7 @@ export const defaultServiceMethodType = {
   type: "",
 };
 
-export interface ProtoSvcTsdModel {
+export interface ProtoServiceDefinitionModel {
   dateString: string;
   fileName: string;
   imports: string[];
@@ -57,7 +57,7 @@ export function format(
   exportMap: ExportMap,
   generatePromiseClients: boolean,
   dateString: string = new Date().toString()
-): ProtoSvcTsdModel {
+): ProtoServiceDefinitionModel {
   if (descriptor.getServiceList().length === 0) {
     return null;
   }
@@ -140,7 +140,7 @@ export function format(
     return str.charAt(0).toLowerCase() + str.slice(1);
   });
 
-  const result = {
+  return {
     dateString,
     fileName,
     imports,
@@ -148,7 +148,4 @@ export function format(
     packageName,
     services,
   };
-
-  // console.log(JSON.stringify(result, null, 2));
-  return result;
 }

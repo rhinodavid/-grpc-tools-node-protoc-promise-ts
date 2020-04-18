@@ -3,6 +3,8 @@ import * as handlebars from "handlebars";
 import * as helpers from "handlebars-helpers";
 import * as path from "path";
 
+import { ProtoMessageDefinitionModel } from "./format/ProtoMessageDefinitionFormatter";
+import { ProtoServiceDefinitionModel } from "./format/ProtoServiceDefinitionFormatter";
 import { format as prettier } from "prettier";
 
 const TPL_BASE_PATH = path.join(__dirname, "template");
@@ -16,12 +18,16 @@ export function compile(templateName: string): HandlebarsTemplateDelegate {
 }
 
 export function render(
-  templateName: string,
-  params: { [key: string]: any }
+  templateName: "message_definition_template" | "service_definition_template",
+  params: ProtoMessageDefinitionModel | ProtoServiceDefinitionModel
 ): string {
-  const template =
-    templateCache[templateName] ||
-    (templateCache[templateName] = compile(templateName));
+  let template;
+  if (templateCache[templateName]) {
+    template = templateCache[templateName];
+  } else {
+    templateCache[templateName] = compile(templateName);
+    template = templateCache[templateName];
+  }
   const result = template(params);
   return prettier(result, { parser: "typescript" });
 }
@@ -43,8 +49,8 @@ handlebars.registerHelper("curlyRight", function () {
 });
 
 handlebars.registerHelper("renderPartial", function (
-  templateName: string,
-  params: { [key: string]: any }
+  templateName: "message_definition_template" | "service_definition_template",
+  params: ProtoMessageDefinitionModel | ProtoServiceDefinitionModel
 ) {
   return render(templateName, params);
 });

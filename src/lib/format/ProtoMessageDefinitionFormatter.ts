@@ -18,7 +18,7 @@ import { ExportMap } from "../ExportMap";
 import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 import { WellKnownTypesMap } from "../WellKnown";
 
-export interface ProtoMsgTsdModel {
+export interface ProtoMessageDefinitionModel {
   dateString: string;
   enums: EnumModel[];
   extensions: ExtensionModel[];
@@ -32,7 +32,7 @@ export function format(
   descriptor: FileDescriptorProto,
   exportMap: ExportMap,
   dateString: string = new Date().toString()
-): ProtoMsgTsdModel {
+): ProtoMessageDefinitionModel {
   const fileName = descriptor.getName();
   const packageName = descriptor.getPackage();
 
