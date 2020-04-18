@@ -1,7 +1,7 @@
 import * as LibFs from "fs";
 import * as LibUtil from "util";
 
-const LOG_PATH = "/tmp/protoc-gen-ts.debug.log";
+const LOG_PATH = "/tmp/protoc-promise-gen-ts.debug.log";
 
 export function log(info: any): void {
   LibFs.appendFileSync(

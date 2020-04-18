@@ -19,17 +19,19 @@ import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_
 import { WellKnownTypesMap } from "../WellKnown";
 
 export interface ProtoMsgTsdModel {
-  packageName: string;
+  dateString: string;
+  enums: EnumModel[];
+  extensions: ExtensionModel[];
   fileName: string;
   imports: string[];
   messages: MessageModel[];
-  extensions: ExtensionModel[];
-  enums: EnumModel[];
+  packageName: string;
 }
 
 export function format(
   descriptor: FileDescriptorProto,
-  exportMap: ExportMap
+  exportMap: ExportMap,
+  dateString: string = new Date().toString()
 ): ProtoMsgTsdModel {
   const fileName = descriptor.getName();
   const packageName = descriptor.getPackage();
@@ -70,11 +72,12 @@ export function format(
   });
 
   return {
-    packageName: packageName,
-    fileName: fileName,
-    imports: imports,
-    messages: messages,
-    extensions: extensions,
-    enums: enums,
+    dateString,
+    enums,
+    extensions,
+    fileName,
+    imports,
+    messages,
+    packageName,
   };
 }

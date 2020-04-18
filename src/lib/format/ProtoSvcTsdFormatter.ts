@@ -16,10 +16,10 @@ export interface ServiceType {
   methods: Array<ServiceMethodType>;
 }
 
-export const defaultServiceType = JSON.stringify({
+export const defaultServiceType = {
   serviceName: "",
   methods: [],
-} as ServiceType);
+};
 
 export interface ServiceMethodType {
   packageName: string;
@@ -32,27 +32,31 @@ export interface ServiceMethodType {
   type: string; // "ClientUnaryCall" || "ClientWritableStream" || "ClientReadableStream" || "ClientDuplexStream"
 }
 
-export const defaultServiceMethodType = JSON.stringify({
-  packageName: "",
-  serviceName: "",
+export const defaultServiceMethodType = {
   methodName: "",
+  packageName: "",
   requestStream: false,
-  responseStream: false,
   requestTypeName: "",
+  responseStream: false,
   responseTypeName: "",
+  serviceName: "",
   type: "",
-} as ServiceMethodType);
+};
 
 export interface ProtoSvcTsdModel {
-  packageName: string;
+  dateString: string;
   fileName: string;
   imports: string[];
+  generatePromiseClients: boolean;
+  packageName: string;
   services: Array<ServiceType>;
 }
 
 export function format(
   descriptor: FileDescriptorProto,
-  exportMap: ExportMap
+  exportMap: ExportMap,
+  generatePromiseClients: boolean,
+  dateString: string = new Date().toString()
 ): ProtoSvcTsdModel {
   if (descriptor.getServiceList().length === 0) {
     return null;
@@ -92,15 +96,12 @@ export function format(
   });
 
   descriptor.getServiceList().forEach((service) => {
-    const serviceData = JSON.parse(defaultServiceType) as ServiceType;
+    const serviceData = defaultServiceType;
 
     serviceData.serviceName = service.getName();
 
     service.getMethodList().forEach((method) => {
-      const methodData = JSON.parse(
-        defaultServiceMethodType
-      ) as ServiceMethodType;
-
+      const methodData = defaultServiceMethodType;
       methodData.packageName = packageName;
       methodData.serviceName = serviceData.serviceName;
       methodData.methodName = method.getName();
@@ -140,9 +141,11 @@ export function format(
   });
 
   return {
-    packageName: packageName,
-    fileName: fileName,
-    imports: imports,
-    services: services,
+    dateString,
+    fileName,
+    imports,
+    generatePromiseClients,
+    packageName,
+    services,
   };
 }

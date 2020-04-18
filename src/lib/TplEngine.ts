@@ -1,8 +1,7 @@
 import * as fs from "fs";
 import * as handlebars from "handlebars";
+import * as helpers from "handlebars-helpers";
 import * as path from "path";
-
-import helpers from "handlebars-helpers";
 
 const TPL_BASE_PATH = path.join(__dirname, "template");
 
