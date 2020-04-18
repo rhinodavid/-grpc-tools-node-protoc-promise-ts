@@ -58,15 +58,14 @@ withAllStdIn((inputBuff: Buffer) => {
       typedInputBuff
     );
     const parameters = codeGenRequest.getParameter().toLowerCase();
-    const generatePromiseClients = parameters.includes(
-      "generate_promise_client"
-    );
-    if (parameters.length && !generatePromiseClients) {
+    const noPromiseClients = parameters.includes("no_promise_clients");
+    if (parameters.length && !noPromiseClients) {
       throw new Error(
         `grpc-tools-node-protoc-promise-ts received an unknown parameter: ${parameters}
           only allowed parameter is generate_promise_clients`
       );
     }
+    const generatePromiseClients = !noPromiseClients;
     const codeGenResponse = new CodeGeneratorResponse();
     const exportMap = new ExportMap();
     const fileNameToDescriptor: { [key: string]: FileDescriptorProto } = {};
