@@ -3,6 +3,8 @@ import * as handlebars from "handlebars";
 import * as helpers from "handlebars-helpers";
 import * as path from "path";
 
+import { format as prettier } from "prettier";
+
 const TPL_BASE_PATH = path.join(__dirname, "template");
 
 const templateCache = {};
@@ -41,5 +43,6 @@ handlebars.registerHelper("render", function (
   templateName: string,
   params: { [key: string]: any }
 ) {
-  return render(templateName, params);
+  const result = render(templateName, params);
+  return prettier(result, { parser: "typescript" });
 });

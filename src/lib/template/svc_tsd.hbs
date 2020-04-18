@@ -22,7 +22,6 @@ import { TUnaryRpc } from "grpc-promise-ts";
 {{/if}}
 
 {{#each services}}
-
 interface I{{{serviceName}}}Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     {{#each methods}}
     {{lcFirst methodName}}: I{{{serviceName}}}Service_I{{{methodName}}};
@@ -133,9 +132,5 @@ export class {{{serviceName}}}PromiseClient extends grpc.Client implements I{{{s
 
     // TODO: add other types of RPCs
 }
-
 {{/if}}
 {{/each}}
-
-
-
