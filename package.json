@@ -9,7 +9,9 @@
   "dependencies": {
     "google-protobuf": "3.5.0",
     "handlebars": "4.7.4",
-    "handlebars-helpers": "0.10.0"
+    "handlebars-helpers": "0.10.0",
+    "import-sort-parser-typescript": "^6.0.0",
+    "prettier": "^2.0.4"
   },
   "description": "Generate TypeScript definitions for type safe gRPC with a modern API",
   "devDependencies": {
@@ -21,22 +23,21 @@
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "import-sort-parser-typescript": "^6.0.0",
-    "prettier": "^2.0.4",
     "typescript": "^3.8.3"
   },
   "files": [
+    "bin/**/*",
     "build/**/*"
   ],
   "homepage": "https://github.com/rhinodavid/grpc-tools-node-protoc-promise-ts#readme",
   "keywords": [
-    "TypeScript",
+    "grpc-tools-node-protoc-promise-ts",
     "gRPC",
     "promise",
     "promises",
     "protobuf",
     "protoc",
-    "grpc-tools-node-protoc-promise-ts"
+    "TypeScript"
   ],
   "license": "MIT",
   "main": "build/index.js",
@@ -50,8 +51,7 @@
     "lint": "eslint .",
     "postversion": "git push && git push --tags",
     "prepare": "",
-    "prepublishOnly": "eslint . && jest",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "eslint . && yarn build"
   },
   "version": "0.0.1"
 }
