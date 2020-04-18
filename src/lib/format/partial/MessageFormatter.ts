@@ -330,7 +330,7 @@ export function format(
   ) {
     return `add${fieldData.camelUpperName}(value${
       fieldData.isOptionalValue ? "?" : ""
-    }: ${valueType}, index?: number): ${valueType};`;
+    }: ${valueType}, index?)`;
   });
   registerHelper("oneOfName", function (oneOfDecl: OneofDescriptorProto) {
     return oneOfName(oneOfDecl.getName());

@@ -9,13 +9,6 @@ const TPL_BASE_PATH = path.join(__dirname, "template");
 
 const templateCache = {};
 
-export function registerHelper(
-  name: string,
-  fn: handlebars.HelperDelegate
-): void {
-  handlebars.registerHelper(name, fn);
-}
-
 export function compile(templateName: string): HandlebarsTemplateDelegate {
   return handlebars.compile(
     fs.readFileSync(`${path.join(TPL_BASE_PATH, templateName)}.hbs`).toString()
@@ -29,20 +22,29 @@ export function render(
   const template =
     templateCache[templateName] ||
     (templateCache[templateName] = compile(templateName));
-  return template(params);
+  const result = template(params);
+  return prettier(result, { parser: "typescript" });
 }
 
-helpers({ handlebars: handlebars });
+export function registerHelper(
+  name: string,
+  fn: handlebars.HelperDelegate
+): void {
+  handlebars.registerHelper(name, fn);
+}
+
+helpers({ handlebars });
+
 handlebars.registerHelper("curlyLeft", function () {
   return "{";
 });
 handlebars.registerHelper("curlyRight", function () {
   return "}";
 });
-handlebars.registerHelper("render", function (
+
+handlebars.registerHelper("renderPartial", function (
   templateName: string,
   params: { [key: string]: any }
 ) {
-  const result = render(templateName, params);
-  return prettier(result, { parser: "typescript" });
+  return render(templateName, params);
 });

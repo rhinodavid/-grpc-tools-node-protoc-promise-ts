@@ -140,7 +140,7 @@ export function format(
     return str.charAt(0).toLowerCase() + str.slice(1);
   });
 
-  return {
+  const result = {
     dateString,
     fileName,
     imports,
@@ -148,4 +148,7 @@ export function format(
     packageName,
     services,
   };
+
+  // console.log(JSON.stringify(result, null, 2));
+  return result;
 }
