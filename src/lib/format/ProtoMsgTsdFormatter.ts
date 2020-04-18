@@ -62,13 +62,13 @@ export function format(
   });
 
   descriptor.getMessageTypeList().forEach((enumType) => {
-    messages.push(formatMessage(fileName, exportMap, enumType, "", descriptor));
+    messages.push(formatMessage(fileName, exportMap, enumType, descriptor));
   });
   descriptor.getExtensionList().forEach((extension) => {
-    extensions.push(formatExtension(fileName, exportMap, extension, ""));
+    extensions.push(formatExtension(fileName, exportMap, extension));
   });
   descriptor.getEnumTypeList().forEach((enumType) => {
-    enums.push(formatEnum(enumType, ""));
+    enums.push(formatEnum(enumType));
   });
 
   return {

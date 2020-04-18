@@ -6,7 +6,6 @@ import {
 import { oneOfName } from "../../Utility";
 
 export interface OneofModel {
-  indent: string;
   oneofName: string;
   oneofNameUpper: string;
   fields: { [key: string]: number };
@@ -14,8 +13,7 @@ export interface OneofModel {
 
 export function format(
   oneofDecl: OneofDescriptorProto,
-  oneofFields: Array<FieldDescriptorProto>,
-  indent: string
+  oneofFields: Array<FieldDescriptorProto>
 ): OneofModel {
   const oneofName = oneOfName(oneofDecl.getName());
   const oneofNameUpper = oneofDecl.getName().toUpperCase();
@@ -26,9 +24,8 @@ export function format(
   });
 
   return {
-    indent,
-    oneofName: oneofName,
-    oneofNameUpper: oneofNameUpper,
-    fields: fields,
+    oneofName,
+    oneofNameUpper,
+    fields,
   };
 }

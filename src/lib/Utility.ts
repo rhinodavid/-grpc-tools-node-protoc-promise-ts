@@ -36,14 +36,6 @@ export function oneOfName(name: string) {
   return uppercaseFirst(snakeToCamel(name));
 }
 
-export function generateIndent(indentLevel: number): string {
-  let indent = "";
-  for (let i = 0; i < indentLevel; i++) {
-    indent += "    ";
-  }
-  return indent;
-}
-
 export function getPathToRoot(fileName: string) {
   const depth = fileName.split("/").length;
   return depth === 1 ? "./" : new Array(depth).join("../");

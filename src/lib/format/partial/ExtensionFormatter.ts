@@ -5,7 +5,6 @@ import { FieldDescriptorProto } from "google-protobuf/google/protobuf/descriptor
 import { getFieldType } from "./FieldTypesFormatter";
 
 export interface ExtensionModel {
-  indent: string;
   extensionName: string;
   fieldType: string;
 }
@@ -13,8 +12,7 @@ export interface ExtensionModel {
 export function format(
   fileName: string,
   exportMap: ExportMap,
-  extension: FieldDescriptorProto,
-  indent: string
+  extension: FieldDescriptorProto
 ): ExtensionModel {
   let extensionName = snakeToCamel(extension.getName());
   if (isReserved(extensionName)) {
@@ -29,7 +27,6 @@ export function format(
   );
 
   return {
-    indent,
     extensionName: extensionName,
     fieldType: fieldType,
   };

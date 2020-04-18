@@ -95,7 +95,6 @@ export interface MessageMapField {
 }
 
 export interface MessageModel {
-  indent: string;
   objectTypeName: string;
   BYTES_TYPE: number;
   MESSAGE_TYPE: number;
@@ -125,10 +124,8 @@ export function format(
   fileName: string,
   exportMap: ExportMap,
   descriptor: DescriptorProto,
-  indent: string,
   fileDescriptor: FileDescriptorProto
 ): MessageModel {
-  const nextIndent = `${indent}    `;
   const messageData = JSON.parse(defaultMessageType) as MessageType;
 
   messageData.messageName = descriptor.getName();
@@ -288,29 +285,23 @@ export function format(
   });
 
   descriptor.getNestedTypeList().forEach((nested) => {
-    const msgOutput = format(
-      fileName,
-      exportMap,
-      nested,
-      nextIndent,
-      fileDescriptor
-    );
+    const msgOutput = format(fileName, exportMap, nested, fileDescriptor);
     if (msgOutput !== null) {
       // If the message class is a Map entry then it isn't output, so don't print the namespace block
       messageData.nestedTypes.push(msgOutput);
     }
   });
   descriptor.getEnumTypeList().forEach((enumType) => {
-    messageData.formattedEnumListStr.push(formatEnum(enumType, nextIndent));
+    messageData.formattedEnumListStr.push(formatEnum(enumType));
   });
   descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
     messageData.formattedOneofListStr.push(
-      formatOneOf(oneOfDecl, oneofGroups[index] || [], nextIndent)
+      formatOneOf(oneOfDecl, oneofGroups[index] || [])
     );
   });
   descriptor.getExtensionList().forEach((extension) => {
     messageData.formattedExtListStr.push(
-      formatExtension(fileName, exportMap, extension, nextIndent)
+      formatExtension(fileName, exportMap, extension)
     );
   });
 
@@ -337,7 +328,6 @@ export function format(
   });
 
   return {
-    indent,
     objectTypeName: OBJECT_TYPE_NAME,
     BYTES_TYPE: BYTES_TYPE,
     MESSAGE_TYPE: MESSAGE_TYPE,
