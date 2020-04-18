@@ -21,11 +21,11 @@
 {{{../indent}}}    get{{{this.camelUpperName}}}List_asU8(): Array<Uint8Array>;
 {{{../indent}}}    get{{{this.camelUpperName}}}List_asB64(): Array<string>;
 {{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<Uint8Array | string>): {{{../message.messageName}}};
-{{{../indent}}}    {{printRepeatedAddMethod this "Uint8Array | string"}}
+{{{../indent}}}    {{printRepeatedAddMethod this "Uint8Array | string"}}: {{{../message.messageName}}};
             {{~else~}}
 {{{../indent}}}    get{{{this.camelUpperName}}}List(): Array<{{{this.exportType}}}>;
 {{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<{{{this.exportType}}}>): {{{../message.messageName}}};
-{{{../indent}}}    {{printRepeatedAddMethod this this.exportType}}
+{{{../indent}}}    {{printRepeatedAddMethod this this.exportType}}: {{{../message.messageName}}};
             {{~/is~}}
         {{~else~}}{{!-- repeat else --}}
             {{~#is this.type ../BYTES_TYPE~}}
