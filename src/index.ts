@@ -60,7 +60,7 @@ withAllStdIn((inputBuff: Buffer) => {
     const parameters = codeGeneratorRequest.getParameter().toLowerCase();
     const generatePromiseClients = parameters
       .toLowerCase()
-      .replace(/\W/g, "")
+      .replace(/[\W_]/g, "")
       .includes("genpromiseclient");
     if (parameters.length && !generatePromiseClients) {
       throw new Error(
