@@ -58,15 +58,17 @@ withAllStdIn((inputBuff: Buffer) => {
       typedInputBuffer
     );
     const parameters = codeGeneratorRequest.getParameter().toLowerCase();
-    const noPromiseClients = parameters.includes("no_promise_clients");
-    if (parameters.length && !noPromiseClients) {
+    const generatePromiseClients = parameters
+      .toLowerCase()
+      .replace(/\W/g, "")
+      .includes("genpromiseclient");
+    if (parameters.length && !generatePromiseClients) {
       throw new Error(
         `grpc-tools-node-protoc-promise-ts received an unknown parameter: ${parameters}
           only allowed parameter is no_promise_clients, which will stop promise clients
           from being written to the service definition files`
       );
     }
-    const generatePromiseClients = !noPromiseClients;
     const codeGeneratorResponse = new CodeGeneratorResponse();
     const exportMap = new ExportMap();
     const fileNameToDescriptor: Record<string, FileDescriptorProto> = {};
