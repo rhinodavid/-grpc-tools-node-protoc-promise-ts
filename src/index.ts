@@ -57,7 +57,7 @@ withAllStdIn((inputBuff: Buffer) => {
     const codeGeneratorRequest = CodeGeneratorRequest.deserializeBinary(
       typedInputBuffer
     );
-    const parameters = codeGeneratorRequest.getParameter().toLowerCase();
+    const parameters = codeGeneratorRequest.getParameter();
     const generatePromiseClients = parameters
       .toLowerCase()
       .replace(/[\W_]/g, "")
