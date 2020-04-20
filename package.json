@@ -1,7 +1,7 @@
 {
   "author": "David Walsh",
   "bin": {
-    "grpc-tools-node-typescript-promise-plugin": "bin/protoc-promise-gen-ts"
+    "grpc-promise-ts-generator-plugin": "bin/grpc-promise-ts-generator-plugin"
   },
   "bugs": {
     "url": "https://github.com/rhinodavid/grpc-promise-ts-generator-plugin/issues"
