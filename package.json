@@ -4,7 +4,7 @@
     "grpc-tools-node-typescript-promise-plugin": "bin/protoc-promise-gen-ts"
   },
   "bugs": {
-    "url": "https://github.com/rhinodavid/grpc-tools-node-protoc-promise-ts/issues"
+    "url": "https://github.com/rhinodavid/grpc-promise-ts-generator-plugin/issues"
   },
   "dependencies": {
     "google-protobuf": "3.5.0",
@@ -29,9 +29,9 @@
     "bin/**/*",
     "build/**/*"
   ],
-  "homepage": "https://github.com/rhinodavid/grpc-tools-node-protoc-promise-ts#readme",
+  "homepage": "https://github.com/rhinodavid/grpc-promise-ts-generator-plugin#readme",
   "keywords": [
-    "grpc-tools-node-protoc-promise-ts",
+    "grpc-promise-ts-generator-plugin",
     "gRPC",
     "promise",
     "promises",
@@ -41,10 +41,10 @@
   ],
   "license": "MIT",
   "main": "build/index.js",
-  "name": "grpc-tools-node-protoc-promise-ts",
+  "name": "grpc-promise-ts-generator-plugin",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rhinodavid/grpc-tools-node-protoc-promise-ts.git"
+    "url": "git+https://github.com/rhinodavid/grpc-promise-ts-generator-plugin.git"
   },
   "scripts": {
     "build": "tsc -p . && cp -r src/lib/template build/lib",
@@ -53,5 +53,5 @@
     "prepare": "",
     "prepublishOnly": "eslint . && yarn build"
   },
-  "version": "0.0.4"
+  "version": "0.0.1"
 }

@@ -1,6 +1,4 @@
-# grpc_tools_node_protoc_ts
-
-**Generate Typescript definitions for type safe gRPC with a modern API**
+# Generate Typescript definitions for type safe gRPC with a modern API
 
 _A fork of [`grpc_tools_node_protoc_ts`](https://github.com/agreatfool/grpc_tools_node_protoc_ts)_
 
@@ -13,9 +11,10 @@ protos produced by the (poorly documented) [`grpc-tools` npm package](https://ww
 
 ## Why would I use this?
 
-If you want to use [protos](https://developers.google.com/protocol-buffers) and [gRPC](https://grpc.io/) in Javascript code, you could use the 
-[`@grpc/proto-loader`](https://github.com/grpc/grpc-node/tree/master/packages/proto-loader) package which parses the protos at runtime. If you need flexibily, this may be the best option. However, if you've gotten this far, you're probably looking for
-type safety, and for that we need to generate code.
+If you want to use [protos](https://developers.google.com/protocol-buffers) and [gRPC](https://grpc.io/) in Javascript code,
+you could use the [`@grpc/proto-loader`](https://github.com/grpc/grpc-node/tree/master/packages/proto-loader) package.
+It parses the protos to Javacript at runtime. If you need flexibily, this may be the best option.
+However, if you've gotten this far, you're probably looking for type safety, and for that we need to generate code.
 
 `grpc-tools` includes a binary (`protoc`) and plugin to generate Node implementations of protos, and this package is a plugin for `protoc` which generates Typescript definitions for those implementations.
 
