@@ -16,92 +16,81 @@ import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_
 import { GrpcObject } from "@grpc/grpc-js";
 
 describe("gRCP service definitions", () => {
-  describe("generate grpc service definition", () => {
-    it("without promise clients", async () => {
-      const packageDefinition = await protoLoader.load(
-        `${__dirname}/test.proto`,
-        {}
-      );
+  it("generates grpc service definition", async () => {
+    const packageDefinition = await protoLoader.load(
+      `${__dirname}/test.proto`,
+      {}
+    );
 
-      const packageObject: Record<
-        string,
-        GrpcObject | ServiceClientConstructor | ProtobufTypeDefinition
-      > = grpcLibrary.loadPackageDefinition(packageDefinition);
+    const packageObject: Record<
+      string,
+      GrpcObject | ServiceClientConstructor | ProtobufTypeDefinition
+    > = grpcLibrary.loadPackageDefinition(packageDefinition);
 
-      const isDefs = (
-        o: GrpcObject | ServiceClientConstructor | ProtobufTypeDefinition
-      ): o is ProtobufTypeDefinition => {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        return (<ProtobufTypeDefinition>o).fileDescriptorProtos !== undefined;
-      };
-      const namesToDescriptions = mapObject(
-        packageObject,
-        (
-          x: Record<
-            string,
-            GrpcObject | ProtobufTypeDefinition | ServiceClientConstructor
-          >
-        ) =>
-          mapObject(x, (o) =>
-            isDefs(o)
-              ? o.fileDescriptorProtos.map((buffer) => {
-                  const typedInputBuffer = new Uint8Array(
-                    (buffer as any).length
-                  );
-                  typedInputBuffer.set(buffer);
-                  const proto = FileDescriptorProto.deserializeBinary(
-                    typedInputBuffer
-                  );
-                  return proto;
-                })
-              : null
-          )
-      );
-      const testDescriptors = namesToDescriptions["test"]; // see what gets rendered for "test.proto"
+    const isDefs = (
+      o: GrpcObject | ServiceClientConstructor | ProtobufTypeDefinition
+    ): o is ProtobufTypeDefinition => {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      return (<ProtobufTypeDefinition>o).fileDescriptorProtos !== undefined;
+    };
+    const namesToDescriptions = mapObject(
+      packageObject,
+      (
+        x: Record<
+          string,
+          GrpcObject | ProtobufTypeDefinition | ServiceClientConstructor
+        >
+      ) =>
+        mapObject(x, (o) =>
+          isDefs(o)
+            ? o.fileDescriptorProtos.map((buffer) => {
+                const typedInputBuffer = new Uint8Array((buffer as any).length);
+                typedInputBuffer.set(buffer);
+                const proto = FileDescriptorProto.deserializeBinary(
+                  typedInputBuffer
+                );
+                return proto;
+              })
+            : null
+        )
+    );
+    const testDescriptors = namesToDescriptions["test"]; // see what gets rendered for "test.proto"
 
-      const fileDescriptorProtos: Array<FileDescriptorProto> = flatten(
-        Object.values(testDescriptors).filter(Boolean)
-      );
+    const fileDescriptorProtos: Array<FileDescriptorProto> = flatten(
+      Object.values(testDescriptors).filter(Boolean)
+    );
 
-      // TODO: make sure each descriptor is unique
+    // TODO: make sure each descriptor is unique
 
-      const exportMap = new ExportMap();
-      fileDescriptorProtos.forEach((b) => exportMap.addFileDescriptor(b));
+    const exportMap = new ExportMap();
+    fileDescriptorProtos.forEach((b) => exportMap.addFileDescriptor(b));
 
-      const dateString: string = new Date(
-        "Tue Sep 21 2020 03:15:20 GMT-0600 (Mountain Daylight Time)"
-      ).toString();
+    const dateString: string = new Date(
+      "Tue Sep 21 2020 03:15:20 GMT-0600 (Mountain Daylight Time)"
+    ).toString();
 
-      fileDescriptorProtos.forEach((fileDescriptorProto) => {
-        const m = formatProtoMessage(
-          fileDescriptorProto,
-          exportMap,
-          dateString
-        );
-        const message = render("message_definition_template", m);
-        expect(message).toMatchSnapshot(
-          `${fileDescriptorProto.getName()}_message`
-        );
+    const fileDescriptorProto = fileDescriptorProtos[0];
+    expect(fileDescriptorProto.getName()).toEqual("test.proto");
 
-        const p = formatProtoService(
-          fileDescriptorProto,
-          exportMap,
-          false,
-          dateString
-        );
-        const service = render("service_definition_template", p);
-        expect(service).toMatchSnapshot(
-          `${fileDescriptorProto.getName()}_service`
-        );
+    const m = formatProtoMessage(fileDescriptorProto, exportMap, dateString);
+    const message = render("message_definition_template", m);
+    expect(message).toMatchSnapshot(`${fileDescriptorProto.getName()}_message`);
 
-        const serviceWithPromises = render(
-          "service_definition_template",
-          formatProtoService(fileDescriptorProto, exportMap, true, dateString)
-        );
-        expect(serviceWithPromises).toMatchSnapshot(
-          `${fileDescriptorProto.getName()}_promise_service`
-        );
-      });
-    });
+    const p = formatProtoService(
+      fileDescriptorProto,
+      exportMap,
+      false,
+      dateString
+    );
+    const service = render("service_definition_template", p);
+    expect(service).toMatchSnapshot(`${fileDescriptorProto.getName()}_service`);
+
+    const serviceWithPromises = render(
+      "service_definition_template",
+      formatProtoService(fileDescriptorProto, exportMap, true, dateString)
+    );
+    expect(serviceWithPromises).toMatchSnapshot(
+      `${fileDescriptorProto.getName()}_promise_service`
+    );
   });
 });
