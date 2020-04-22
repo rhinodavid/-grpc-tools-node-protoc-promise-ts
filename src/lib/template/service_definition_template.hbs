@@ -18,7 +18,7 @@
     {{{this}}}
 {{/each}}
 {{#if generatePromiseClients}}
-import { TUnaryRpc } from "grpc-promise-ts";
+import { TDuplexRpc, TUnaryRpc } from "grpc-promise-ts";
 {{/if}}
 
 {{#each services}}
@@ -117,7 +117,10 @@ import { TUnaryRpc } from "grpc-promise-ts";
         export interface I{{{serviceName}}}PromiseClient {
             {{#each methods}}
                 {{#eq type "ClientUnaryCall"}}
-            {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientDuplexStream"}}
+                    {{lcFirst methodName}}:TDuplexRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
             {{/each}}
         }
@@ -129,7 +132,10 @@ import { TUnaryRpc } from "grpc-promise-ts";
             // function in the `gprc-promise-ts` package
             {{#each methods}}
                 {{#eq type "ClientUnaryCall"}}
-            public {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    public {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientDuplexStream"}}
+                    public {{lcFirst methodName}}:TDuplexRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
             {{/each}}
 
