@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package test;
+
+// TODO: add test protos with all field types
+
+message MessageA {
+    int32 int = 1;
+}
+
+message MessageB {
+    int32 int = 1;
+}
+
+service Test {
+  rpc unary (MessageA) returns (MessageB);
+}

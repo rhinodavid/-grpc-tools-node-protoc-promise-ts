@@ -7,6 +7,8 @@
     "url": "https://github.com/rhinodavid/grpc-promise-ts-generator-plugin/issues"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.0.0",
+    "@grpc/proto-loader": "^0.5.4",
     "google-protobuf": "3.5.0",
     "handlebars": "4.7.4",
     "handlebars-helpers": "0.10.0",
@@ -16,14 +18,21 @@
   "description": "Generate TypeScript definitions for type safe gRPC with a modern API",
   "devDependencies": {
     "@types/google-protobuf": "3.2.7",
+    "@types/jest": "^25.2.1",
     "@types/node": "12.12.6",
     "@types/prettier": "^2.0.0",
+    "@types/underscore": "^1.9.4",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "typescript": "^3.8.3"
+    "grpc-tools": "^1.8.1",
+    "jest": "^25.4.0",
+    "jest-extended": "^0.11.5",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3",
+    "underscore": "^1.10.2"
   },
   "files": [
     "bin/**/*",
@@ -51,7 +60,8 @@
     "lint": "eslint .",
     "postversion": "git push && git push --tags",
     "prepare": "",
-    "prepublishOnly": "eslint . && yarn build"
+    "prepublishOnly": "eslint . && yarn build",
+    "test": "jest"
   },
   "version": "0.1.0"
 }

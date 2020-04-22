@@ -65,8 +65,7 @@ withAllStdIn((inputBuff: Buffer) => {
     if (parameters.length && !generatePromiseClients) {
       throw new Error(
         `grpc-tools-node-protoc-promise-ts received an unknown parameter: ${parameters}
-          the only allowed parameter is gen-promise-clients, add type definitions for
-          and experimental client with a promise API`
+          the only allowed parameter is gen-promise-clients`
       );
     }
     const codeGeneratorResponse = new CodeGeneratorResponse();
