@@ -73,23 +73,34 @@ describe("gRCP service definitions", () => {
       ).toString();
 
       fileDescriptorProtos.forEach((fileDescriptorProto) => {
-        const message = render(
-          "message_definition_template",
-          formatProtoMessage(fileDescriptorProto, exportMap, dateString)
+        const m = formatProtoMessage(
+          fileDescriptorProto,
+          exportMap,
+          dateString
         );
-        expect(message).toMatchSnapshot();
+        const message = render("message_definition_template", m);
+        expect(message).toMatchSnapshot(
+          `${fileDescriptorProto.getName()}_message`
+        );
 
-        const service = render(
-          "service_definition_template",
-          formatProtoService(fileDescriptorProto, exportMap, false, dateString)
+        const p = formatProtoService(
+          fileDescriptorProto,
+          exportMap,
+          false,
+          dateString
         );
-        expect(service).toMatchSnapshot();
+        const service = render("service_definition_template", p);
+        expect(service).toMatchSnapshot(
+          `${fileDescriptorProto.getName()}_service`
+        );
 
         const serviceWithPromises = render(
           "service_definition_template",
           formatProtoService(fileDescriptorProto, exportMap, true, dateString)
         );
-        expect(serviceWithPromises).toMatchSnapshot();
+        expect(serviceWithPromises).toMatchSnapshot(
+          `${fileDescriptorProto.getName()}_promise_service`
+        );
       });
     });
   });
