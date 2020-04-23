@@ -16,11 +16,6 @@ export interface ServiceType {
   methods: Array<ServiceMethodType>;
 }
 
-export const defaultServiceType = {
-  serviceName: "",
-  methods: [],
-};
-
 export interface ServiceMethodType {
   packageName: string;
   serviceName: string;
@@ -31,17 +26,6 @@ export interface ServiceMethodType {
   responseTypeName: string;
   type: string; // "ClientUnaryCall" || "ClientWritableStream" || "ClientReadableStream" || "ClientDuplexStream"
 }
-
-export const defaultServiceMethodType = {
-  methodName: "",
-  packageName: "",
-  requestStream: false,
-  requestTypeName: "",
-  responseStream: false,
-  responseTypeName: "",
-  serviceName: "",
-  type: "",
-};
 
 export interface ProtoServiceDefinitionModel {
   dateString: string;
@@ -96,12 +80,24 @@ export function format(
   });
 
   descriptor.getServiceList().forEach((service) => {
-    const serviceData = defaultServiceType;
+    const serviceData = {
+      serviceName: "",
+      methods: [],
+    };
 
     serviceData.serviceName = service.getName();
 
     service.getMethodList().forEach((method) => {
-      const methodData = defaultServiceMethodType;
+      const methodData = {
+        methodName: "",
+        packageName: "",
+        requestStream: false,
+        requestTypeName: "",
+        responseStream: false,
+        responseTypeName: "",
+        serviceName: "",
+        type: "",
+      };
       methodData.packageName = packageName;
       methodData.serviceName = serviceData.serviceName;
       methodData.methodName = method.getName();
@@ -132,7 +128,6 @@ export function format(
 
       serviceData.methods.push(methodData);
     });
-
     services.push(serviceData);
   });
 

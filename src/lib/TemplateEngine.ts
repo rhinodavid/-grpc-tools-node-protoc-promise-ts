@@ -11,7 +11,9 @@ const TPL_BASE_PATH = path.join(__dirname, "template");
 
 const templateCache = {};
 
-export function compile(templateName: string): HandlebarsTemplateDelegate {
+export function compile(
+  templateName: "message_definition_template" | "service_definition_template"
+): HandlebarsTemplateDelegate {
   return handlebars.compile(
     fs.readFileSync(`${path.join(TPL_BASE_PATH, templateName)}.hbs`).toString()
   );

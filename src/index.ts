@@ -122,7 +122,7 @@ withAllStdIn((inputBuff: Buffer) => {
     process.stdout.write(Buffer.from(codeGeneratorResponse.serializeBinary()));
   } catch (e) {
     console = actualConsole;
-    console.error("protoc-promise-gen-ts error: " + e.stack + "\n");
+    console.error("grpc-promise-ts-generator-plugin error: " + e.stack + "\n");
     console.error(e.message);
     process.exit(1);
   }
