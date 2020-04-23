@@ -14,4 +14,7 @@ message MessageB {
 
 service Test {
   rpc unary (MessageA) returns (MessageB);
+  rpc clientStreaming (stream MessageA) returns (MessageB);
+  rpc serverStreaming (MessageA) returns (stream MessageB);
+  rpc bidirectionalStreaming (stream MessageA) returns (stream MessageB);
 }

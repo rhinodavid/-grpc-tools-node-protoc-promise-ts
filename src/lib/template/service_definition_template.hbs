@@ -18,7 +18,7 @@
     {{{this}}}
 {{/each}}
 {{#if generatePromiseClients}}
-    import { TUnaryRpc } from "grpc-promise-ts";
+    import { TBidirectionalStreamingRpc, TClientStreamingRpc, TServerStreamingRpc, TUnaryRpc } from "grpc-promise-ts";
 {{/if}}
 
 {{#each services}}
@@ -115,13 +115,21 @@
         * `grpc-promise-ts` (https://github.com/rhinodavid/grpc-promise-ts) package
         */
         export interface I{{{serviceName}}}PromiseClient {
-            {{#each methods}}
+                  {{#each methods}}
                 {{#eq type "ClientUnaryCall"}}
-                    {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    public {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientWritableStream"}}
+                    public {{lcFirst methodName}}:TClientStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientReadableStream"}}
+                    public {{lcFirst methodName}}:TServerStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientDuplexStream"}}
+                    public {{lcFirst methodName}}:TBidirectionalStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
             {{/each}}
-        }
-
+    }
         export class {{{serviceName}}}PromiseClient extends grpc.Client implements I{{{serviceName}}}PromiseClient {
             // This class cannot be directly instantiated.
             // To get an instance of {{{serviceName}}}PromiseClient, first create
@@ -131,9 +139,16 @@
                 {{#eq type "ClientUnaryCall"}}
                     public {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
+                {{#eq type "ClientWritableStream"}}
+                    public {{lcFirst methodName}}:TClientStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientReadableStream"}}
+                    public {{lcFirst methodName}}:TServerStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
+                {{#eq type "ClientDuplexStream"}}
+                    public {{lcFirst methodName}}:TBidirectionalStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                {{/eq}}
             {{/each}}
-
-            // TODO: add other types of RPCs
         }
     {{/if}}
 {{/each}}

@@ -141,6 +141,7 @@ describe("Typescript definition generation", () => {
     const service = render("service_definition_template", p);
     expect(service).toMatchSnapshot();
   });
+
   it("generates grpc service definition with promises", async () => {
     const packageDefinition = await protoLoader.load(
       `${__dirname}/test.proto`,
@@ -201,8 +202,6 @@ describe("Typescript definition generation", () => {
       "service_definition_template",
       formatProtoService(fileDescriptorProto, exportMap, true, dateString)
     );
-    expect(serviceWithPromises).toMatchSnapshot(
-      `${fileDescriptorProto.getName()}_promise_service`
-    );
+    expect(serviceWithPromises).toMatchSnapshot();
   });
 });
