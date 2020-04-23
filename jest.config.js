@@ -5,9 +5,11 @@ module.exports = {
       tsConfig: "tsconfig.json",
     },
   },
+
   moduleFileExtensions: ["js", "ts"],
   modulePathIgnorePatterns: ["node_modules"],
   name: "test",
+  testPathIgnorePatterns: ["build"],
   setupFilesAfterEnv: ["jest-extended"],
   testEnvironment: "node",
   transform: {
