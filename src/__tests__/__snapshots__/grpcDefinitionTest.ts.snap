@@ -95,51 +95,29 @@ exports[`gRCP service definitions generates grpc service definition: test.proto_
 
 import * as grpc from \\"grpc\\";
 import * as test_pb from \\"./test_pb\\";
-import { TDuplexRpc, TUnaryRpc } from \\"grpc-promise-ts\\";
+import { TUnaryRpc } from \\"grpc-promise-ts\\";
 
 interface ITestService
   extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-  duplex: ITestService_Iduplex;
-  duplex: ITestService_Iduplex;
-  duplex: ITestService_Iduplex;
-  duplex: ITestService_Iduplex;
+  unary: ITestService_Iunary;
+  unary: ITestService_Iunary;
 }
 
-interface ITestService_Iduplex
+interface ITestService_Iunary
   extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
+  path: string; // \\"/test.Test/unary\\"
+  requestStream: boolean; // false
+  responseStream: boolean; // false
   requestSerialize: grpc.serialize<test_pb.MessageA>;
   requestDeserialize: grpc.deserialize<test_pb.MessageA>;
   responseSerialize: grpc.serialize<test_pb.MessageB>;
   responseDeserialize: grpc.deserialize<test_pb.MessageB>;
 }
-interface ITestService_Iduplex
+interface ITestService_Iunary
   extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
-  requestSerialize: grpc.serialize<test_pb.MessageA>;
-  requestDeserialize: grpc.deserialize<test_pb.MessageA>;
-  responseSerialize: grpc.serialize<test_pb.MessageB>;
-  responseDeserialize: grpc.deserialize<test_pb.MessageB>;
-}
-interface ITestService_Iduplex
-  extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
-  requestSerialize: grpc.serialize<test_pb.MessageA>;
-  requestDeserialize: grpc.deserialize<test_pb.MessageA>;
-  responseSerialize: grpc.serialize<test_pb.MessageB>;
-  responseDeserialize: grpc.deserialize<test_pb.MessageB>;
-}
-interface ITestService_Iduplex
-  extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
+  path: string; // \\"/test.Test/unary\\"
+  requestStream: boolean; // false
+  responseStream: boolean; // false
   requestSerialize: grpc.serialize<test_pb.MessageA>;
   requestDeserialize: grpc.deserialize<test_pb.MessageA>;
   responseSerialize: grpc.serialize<test_pb.MessageB>;
@@ -149,45 +127,59 @@ interface ITestService_Iduplex
 export const TestService: ITestService;
 
 export interface ITestServer {
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
+  unary: grpc.handleUnaryCall<test_pb.MessageA, test_pb.MessageB>;
+  unary: grpc.handleUnaryCall<test_pb.MessageA, test_pb.MessageB>;
 }
 
 export interface ITestClient {
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+  unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
 }
 
 export class TestClient extends grpc.Client implements ITestClient {
@@ -196,34 +188,54 @@ export class TestClient extends grpc.Client implements ITestClient {
     credentials: grpc.ChannelCredentials,
     options?: object
   );
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
+  public unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
 }
 
 /**
@@ -231,10 +243,8 @@ export class TestClient extends grpc.Client implements ITestClient {
  * \`grpc-promise-ts\` (https://github.com/rhinodavid/grpc-promise-ts) package
  */
 export interface ITestPromiseClient {
-  duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
+  unary: TUnaryRpc<test_pb.MessageA, test_pb.MessageB>;
+  unary: TUnaryRpc<test_pb.MessageA, test_pb.MessageB>;
 }
 
 export class TestPromiseClient extends grpc.Client
@@ -243,10 +253,8 @@ export class TestPromiseClient extends grpc.Client
   // To get an instance of TestPromiseClient, first create
   // a TestClient and then pass it to the \`convertToPromiseClient\`
   // function in the \`gprc-promise-ts\` package
-  public duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  public duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  public duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
-  public duplex: TDuplexRpc<test_pb.MessageA, test_pb.MessageB>;
+  public unary: TUnaryRpc<test_pb.MessageA, test_pb.MessageB>;
+  public unary: TUnaryRpc<test_pb.MessageA, test_pb.MessageB>;
 
   // TODO: add other types of RPCs
 }
@@ -275,25 +283,14 @@ import * as test_pb from \\"./test_pb\\";
 
 interface ITestService
   extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-  duplex: ITestService_Iduplex;
-  duplex: ITestService_Iduplex;
+  unary: ITestService_Iunary;
 }
 
-interface ITestService_Iduplex
+interface ITestService_Iunary
   extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
-  requestSerialize: grpc.serialize<test_pb.MessageA>;
-  requestDeserialize: grpc.deserialize<test_pb.MessageA>;
-  responseSerialize: grpc.serialize<test_pb.MessageB>;
-  responseDeserialize: grpc.deserialize<test_pb.MessageB>;
-}
-interface ITestService_Iduplex
-  extends grpc.MethodDefinition<test_pb.MessageA, test_pb.MessageB> {
-  path: string; // \\"/test.Test/duplex\\"
-  requestStream: boolean; // true
-  responseStream: boolean; // true
+  path: string; // \\"/test.Test/unary\\"
+  requestStream: boolean; // false
+  responseStream: boolean; // false
   requestSerialize: grpc.serialize<test_pb.MessageA>;
   requestDeserialize: grpc.deserialize<test_pb.MessageA>;
   responseSerialize: grpc.serialize<test_pb.MessageB>;
@@ -303,27 +300,34 @@ interface ITestService_Iduplex
 export const TestService: ITestService;
 
 export interface ITestServer {
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
-  duplex: grpc.handleBidiStreamingCall<test_pb.MessageA, test_pb.MessageB>;
+  unary: grpc.handleUnaryCall<test_pb.MessageA, test_pb.MessageB>;
 }
 
 export interface ITestClient {
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+  unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
-    options: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  duplex(
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  unary(
+    request: test_pb.MessageA,
     metadata: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
 }
 
 export class TestClient extends grpc.Client implements ITestClient {
@@ -332,20 +336,30 @@ export class TestClient extends grpc.Client implements ITestClient {
     credentials: grpc.ChannelCredentials,
     options?: object
   );
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
-  public duplex(
-    metadata?: grpc.Metadata,
-    options?: Partial<grpc.CallOptions>
-  ): grpc.ClientDuplexStream<test_pb.MessageA, test_pb.MessageB>;
+  public unary(
+    request: test_pb.MessageA,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
+  public unary(
+    request: test_pb.MessageA,
+    metadata: grpc.Metadata,
+    options: Partial<grpc.CallOptions>,
+    callback: (
+      error: grpc.ServiceError | null,
+      response: test_pb.MessageB
+    ) => void
+  ): grpc.ClientUnaryCall;
 }
 "
 `;
