@@ -18,7 +18,7 @@
     {{{this}}}
 {{/each}}
 {{#if generatePromiseClients}}
-    import { TBidirectionalStreamingRpc, TClientStreamingRpc, TServerStreamingRpc, TUnaryRpc } from "grpc-promise-ts";
+    import { TClientStreamingRpc, TUnaryRpc } from "grpc-promise-ts";
 {{/if}}
 
 {{#each services}}
@@ -115,18 +115,18 @@
         * `grpc-promise-ts` (https://github.com/rhinodavid/grpc-promise-ts) package
         */
         export interface I{{{serviceName}}}PromiseClient {
-                  {{#each methods}}
+            {{#each methods}}
                 {{#eq type "ClientUnaryCall"}}
-                    public {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    {{lcFirst methodName}}:TUnaryRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
                 {{#eq type "ClientWritableStream"}}
-                    public {{lcFirst methodName}}:TClientStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    {{lcFirst methodName}}:TClientStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
                 {{#eq type "ClientReadableStream"}}
-                    public {{lcFirst methodName}}:TServerStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
                 {{/eq}}
                 {{#eq type "ClientDuplexStream"}}
-                    public {{lcFirst methodName}}:TBidirectionalStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    {{lcFirst methodName}}(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
             {{/each}}
     }
@@ -143,10 +143,10 @@
                     public {{lcFirst methodName}}:TClientStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
                 {{#eq type "ClientReadableStream"}}
-                    public {{lcFirst methodName}}:TServerStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
                 {{/eq}}
                 {{#eq type "ClientDuplexStream"}}
-                    public {{lcFirst methodName}}:TBidirectionalStreamingRpc<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+                    public {{lcFirst methodName}}(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
                 {{/eq}}
             {{/each}}
         }
